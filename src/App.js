@@ -3,6 +3,10 @@ import About from "./About";
 import Home from "./Home";
 import {Route, Routes, Link} from "react-router-dom";
 import Profile from "./Profile";
+import Boards from "./Boards";
+import Board from "./Board";
+import Layout from "./Layout";
+import NotFound from "./NotFound";
 
 const App =() => {
   return (
@@ -18,9 +22,25 @@ const App =() => {
     <hr/>
       {/* 1. <Rountes> 를 활용하여 url 경로와 렌더링해줄 컴포넌트를 연결한다.  */}
       <Routes>
-        <Route path="/" element={<Home/>}/>
-        <Route path="/about" element={<About/>}/>
-        <Route path="/profiles/:username" element={<Profile/>}/>
+
+        <Route element={<Layout/>}> 
+          {/* <Route path="/" element={<Home/>}/> */}
+          <Route index element={<Home/>}/>
+          <Route path="/about" element={<About/>}/>
+          <Route path="/profiles/:username" element={<Profile/>}/>
+        </Route>  
+ 
+        {/* 게시글방법 1 - 게시글 목록(Boards)과 게시글 상세내용(Board) 분리 */}
+        {/* <Route path="/boards" element={<Boards/>}/>
+        <Route path="/boards/:id" element={<Board/>}/> */}
+
+        {/* 게시글 방법2. - 게시글 상세내용이라는 하위 컴포넌트진입시, 게시글목록 상위컴포넌트가 보여지게함 */}
+        <Route path="/boards" element={<Boards/>}>
+          <Route path=":id" element={<Board/>}/>
+        </Route>
+
+        <Route path="*" element={<NotFound/>}/>
+
       </Routes>
     </div>
   );
